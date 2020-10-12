@@ -1,5 +1,5 @@
 
-Don't use the code.  
+I would not recommend using this code. 
 
 I was just experiementing with implementing something like pipes from 
 functional programming languages like Elm and Clojure in 
@@ -7,3 +7,38 @@ Javascript.
 
 I would never write something like this in a production setting. 
 But, writing code like this was fun.  
+
+
+It started as an attempt to express the solution in the language of the problem, 
+to calculate the total: 
+* Calculate the subtotal 
+* Apply discount
+* Add sales tax
+* Add shipping costs 
+
+First, I wrote the functions so that the solution could be more easily expressed. 
+For example, instead of writing code to sum in the main function, calculateTotal
+I wrote a function called calculateSubTotal instead. Any logic regarding 
+how that sum was produced was abstracted away. Even if you didn't know 
+how to code you would know that the line was calculating the subtotal. 
+
+When I wanted to combine the steps into one, it felt awkward. I didn't 
+want to use intermediate variables and reassignment. 
+
+Like: 
+total = calculateSubTotal(items)
+total = applyDiscount(items, discount) 
+.
+. 
+. 
+and so on. 
+
+And I didn't want to squeeze them all on to the same like
+
+addShippingCosts(addSalesTax(applyDiscount(calculateSubTotal(items), discount)), shipping_costs)
+
+In the end, I created a class with one method so that I could express the above as: 
+new $(calculateSubTotal(items)).then(
+     [applyDiscount, discount],
+     addSalesTax, 
+     [addShippingCosts, shippingCosts]) 
